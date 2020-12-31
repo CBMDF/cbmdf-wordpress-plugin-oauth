@@ -1,0 +1,75 @@
+ <?php
+
+    if (isset($_POST["btn-save-cbmdf-oauth-settings"])) {
+        // If the option does not exist, it will be created.
+        update_option("cbmdf_oauth_client_id", sanitize_text_field($_POST['client-id']));
+        update_option("cbmdf_oauth_client_secret", sanitize_text_field($_POST['client-secret']));
+        update_option("cbmdf_oauth_authorize_uri", stripslashes(sanitize_text_field($_POST['authorize-uri'])));
+        update_option("cbmdf_oauth_token_uri", stripslashes(sanitize_text_field($_POST['token-uri'])));
+        update_option("cbmdf_oauth_resource_uri", stripslashes(sanitize_text_field($_POST['resource-uri'])));
+        update_option("cbmdf_oauth_logout_uri", stripslashes(sanitize_text_field($_POST['logout-uri'])));
+        show_message("Configurações salvas!");
+    }
+
+
+    $cbmdf_oauth_client_id = get_option("cbmdf_oauth_client_id");
+    $cbmdf_oauth_client_secret  = get_option("cbmdf_oauth_client_secret");
+    $cbmdf_oauth_authorize_uri  = get_option("cbmdf_oauth_authorize_uri");
+    $cbmdf_oauth_token_uri  = get_option("cbmdf_oauth_token_uri");
+    $cbmdf_oauth_resource_uri  = get_option("cbmdf_oauth_resource_uri");
+    $cbmdf_oauth_logout_uri  = get_option("cbmdf_oauth_logout_uri");
+    $cbmdf_oauth_redirect_uri  = get_option("cbmdf_oauth_redirect_uri");
+
+    ?>
+
+ <div class="wrap">
+
+     <h1>Configurações de Autenticação OAuth</h1>
+     <form method="post" action="admin.php?page=cbmdf-oauth-options" novalidate="novalidate">
+         <table class="form-table" role="presentation">
+             <tbody>
+                 <tr>
+                     <th scope="row"><label for="client-id">Client ID</label></th>
+                     <td><input name="client-id" type="text" id="client-id" value="<?php echo $cbmdf_oauth_client_id; ?>" class="regular-text"></td>
+                 </tr>
+
+                 <tr>
+                     <th scope="row"><label for="client-secret">Client Secret</label></th>
+                     <td><input name="client-secret" type="text" id="client-secret" value="<?php echo $cbmdf_oauth_client_secret; ?>" class="regular-text"></td>
+                 </tr>
+
+                 <tr>
+                     <th scope="row"><label for="authorize-uri">Authorize URI</label></th>
+                     <td><input name="authorize-uri" type="text" id="authorize-uri" value="<?php echo $cbmdf_oauth_authorize_uri; ?>" placeholder="e.g. https://sistemas.cbm.df.gov.br/sistemas/cerberusAuth/public/oauth/authorize" class=" large-text"></td>
+                 </tr>
+
+                 <tr>
+                     <th scope="row"><label for="token-uri">Token URI</label></th>
+                     <td><input name="token-uri" type="text" id="token-uri" value="<?php echo $cbmdf_oauth_token_uri; ?>" placeholder="e.g. https://sistemas.cbm.df.gov.br/sistemas/cerberusAuth/public/oauth/token" class="large-text"></td>
+                 </tr>
+
+                 <tr>
+                     <th scope="row"><label for="resource-uri">Resource URI</label></th>
+                     <td><input name="resource-uri" type="text" id="resource-uri" value="<?php echo $cbmdf_oauth_resource_uri; ?>" placeholder="e.g. https://sistemas.cbm.df.gov.br/sistemas/cerberusAuth/public/oauth/resource" class=" large-text"></td>
+                 </tr>
+
+
+                 <tr>
+                     <th scope="row"><label for="logout-uri">Logout URI</label></th>
+                     <td><input name="logout-uri" type="text" id="logout-uri" value="<?php echo $cbmdf_oauth_logout_uri; ?>" placeholder="e.g. https://sistemas.cbm.df.gov.br/sistemas/cerberusAuth/public/index/sair" class=" large-text"></td>
+                 </tr>
+
+                 <tr>
+                     <th scope="row"><label for="redirect-uri">Redirect URI</label></th>
+                     <td><input name="redirect-uri" type="text" readonly="readonly" id="redirect-uri" value="<?= $cbmdf_oauth_redirect_uri ?>" class=" large-text"></td>
+                 </tr>
+
+
+
+
+             </tbody>
+         </table>
+
+         <?php submit_button('Salvar alterações', 'primary', 'btn-save-cbmdf-oauth-settings'); ?>
+     </form>
+ </div>
