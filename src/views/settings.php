@@ -48,28 +48,39 @@
 
                  <tr>
                      <th scope="row"><label for="authorize-uri">Authorize URI</label></th>
-                     <td><input name="authorize-uri" type="text" id="authorize-uri" value="<?php echo $cbmdf_oauth_authorize_uri; ?>" placeholder="e.g. https://sistemas.cbm.df.gov.br/sistemas/cerberusAuth/public/oauth/authorize" class=" large-text"></td>
+                     <td><input name="authorize-uri" type="text" id="authorize-uri" value="<?php echo $cbmdf_oauth_authorize_uri; ?>" placeholder="e.g. https://sistemas.cbm.df.gov.br/sistemas/cerberusAuth/public/oauth/authorize" class=" large-text">
+                         <p class="description">Endereço para o qual o usuário será redirecionado para realizar a autenticação e autorização.</p>
+                     </td>
                  </tr>
 
                  <tr>
                      <th scope="row"><label for="token-uri">Token URI</label></th>
-                     <td><input name="token-uri" type="text" id="token-uri" value="<?php echo $cbmdf_oauth_token_uri; ?>" placeholder="e.g. https://sistemas.cbm.df.gov.br/sistemas/cerberusAuth/public/oauth/token" class="large-text"></td>
+                     <td><input name="token-uri" type="text" id="token-uri" value="<?php echo $cbmdf_oauth_token_uri; ?>" placeholder="e.g. https://sistemas.cbm.df.gov.br/sistemas/cerberusAuth/public/oauth/token" class="large-text">
+                         <p class="description">Endereço para obter o token de acesso.</p>
+                     </td>
                  </tr>
 
                  <tr>
                      <th scope="row"><label for="resource-uri">Resource URI</label></th>
-                     <td><input name="resource-uri" type="text" id="resource-uri" value="<?php echo $cbmdf_oauth_resource_uri; ?>" placeholder="e.g. https://sistemas.cbm.df.gov.br/sistemas/cerberusAuth/public/oauth/resource" class=" large-text"></td>
+                     <td><input name="resource-uri" type="text" id="resource-uri" value="<?php echo $cbmdf_oauth_resource_uri; ?>" placeholder="e.g. https://sistemas.cbm.df.gov.br/sistemas/cerberusAuth/public/oauth/resource" class=" large-text">
+                         <p class="description">Endereço para obter informações sobre o usuário.</p>
+                     </td>
                  </tr>
 
 
                  <tr>
                      <th scope="row"><label for="logout-uri">Logout URI</label></th>
-                     <td><input name="logout-uri" type="text" id="logout-uri" value="<?php echo $cbmdf_oauth_logout_uri; ?>" placeholder="e.g. https://sistemas.cbm.df.gov.br/sistemas/cerberusAuth/public/index/sair" class=" large-text"></td>
+                     <td><input name="logout-uri" type="text" id="logout-uri" value="<?php echo $cbmdf_oauth_logout_uri; ?>" placeholder="e.g. https://sistemas.cbm.df.gov.br/sistemas/cerberusAuth/public/index/sair" class=" large-text">
+                         <p class="description">Aqui você deve informar a URL para efetuar o logout no servidor OAuth. Alguns servidores implementam o recurso para redirecionar
+                             após o logout, se este for o caso você deve especificar manualmente o endereço para o qual deseja retornar. e.g. https://sistemas.cbm.df.gov.br/logout/<strong>?redirect_to=</strong>http://www.cbm.df.gov.br</p>
+                     </td>
                  </tr>
 
                  <tr>
                      <th scope="row"><label for="redirect-uri">Redirect URI</label></th>
-                     <td><input name="redirect-uri" type="text" readonly="readonly" id="redirect-uri" value="<?= $cbmdf_oauth_redirect_uri ?>" class=" large-text"></td>
+                     <td><input name="redirect-uri" type="text" readonly="readonly" id="redirect-uri" value="<?= $cbmdf_oauth_redirect_uri ?>" class=" large-text">
+                         <p class="description">Endereço de redirecionamento após obter o token de acesso.</p>
+                     </td>
                  </tr>
 
 
