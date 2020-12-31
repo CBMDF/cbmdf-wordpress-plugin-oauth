@@ -69,6 +69,12 @@ class Plugin
         // Configuração do Provider
         require "provider-conf.php";
 
+        if (isset($_GET['cbmdf-oauth-logout'])) {
+            wp_logout();
+            header('Location: ' . $cbmdf_oauth_logout_uri);
+            exit;
+        }
+
         if (isset($_POST['cbmdf-oauth-button'])) {
 
             $authorizationUrl = $provider->getAuthorizationUrl();

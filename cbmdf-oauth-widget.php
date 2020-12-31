@@ -33,7 +33,7 @@ extends \WP_Widget
         } else {
 
             // Verificar se o usuário já está autenticado
-            $logout_url = wp_logout_url(get_permalink());
+            $logout_url = site_url() . "/?cbmdf-oauth-logout";
             $current_user = wp_get_current_user();
             if (is_user_logged_in()) {
                 echo <<<EOF
