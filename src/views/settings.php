@@ -9,6 +9,11 @@
         update_option("cbmdf_oauth_resource_uri", stripslashes(sanitize_text_field($_POST['resource-uri'])));
         update_option("cbmdf_oauth_logout_uri", stripslashes(sanitize_text_field($_POST['logout-uri'])));
         update_option("cbmdf_oauth_redirect_uri", site_url());
+        update_option("cbmdf_oauth_custom_css", stripslashes(sanitize_text_field($_POST['custom-css'])));
+        update_option("cbmdf_oauth_custom_class", stripslashes(sanitize_text_field($_POST['custom-class'])));
+        update_option("cbmdf_oauth_button_icon", stripslashes(sanitize_text_field($_POST['button-icon'])));
+
+
         show_message("Configurações salvas!");
     }
 
@@ -20,12 +25,17 @@
     $cbmdf_oauth_resource_uri  = get_option("cbmdf_oauth_resource_uri");
     $cbmdf_oauth_logout_uri  = get_option("cbmdf_oauth_logout_uri");
     $cbmdf_oauth_redirect_uri  = get_option("cbmdf_oauth_redirect_uri");
+    $cbmdf_oauth_custom_css = get_option("cbmdf_oauth_custom_css");
+    $cbmdf_oauth_custom_class = get_option("cbmdf_oauth_custom_class");
+    $cbmdf_oauth_button_icon = get_option("cbmdf_oauth_button_icon");
 
     ?>
 
  <div class="wrap">
 
      <h1>Configurações de Autenticação OAuth</h1>
+
+     <h2>Parâmetros de autenticação do cliente</h2>
 
      <p class="description">O protocolo <a href="https://www.oauth.com/" target="_blank">OAuth2</a> permite que o usuário realize uma autenticação em um servidor externo de confiança de modo que não seja necessário armazenar a senha ou outras informações. OAuth também é utilizado para prover recurso de Autenticação Única (Single Sign-On).</p>
 
@@ -86,6 +96,40 @@
 
 
 
+             </tbody>
+         </table>
+
+         <hr />
+
+         <h2>Aparência do Widget</h2>
+
+         <table class="form-table" role="presentation">
+             <tbody>
+
+                 <tr>
+                     <th scope="row"><label for="custom-class">Classes Adicionais</label></th>
+                     <td><input type="text" class="large-text" name="custom-class" type="text" id="custom-class" value="<?php echo $cbmdf_oauth_custom_class ?>">
+                         <p class="description">Informar as classes que serão associadas ao atributo <i><strong>class</strong></i> do botão. Separar por espaço. e.g. button-secondary my-icon</p>
+                     </td>
+                 </tr>
+
+                 <tr>
+                     <th scope="row"><label for="custom-css">CSS Personalizado</label></th>
+                     <td><textarea cols="80" rows="10" name="custom-css" type="text" id="custom-css"><?php echo $cbmdf_oauth_custom_css ?></textarea>
+                         <p class="description">Informar apenas o código CSS que será incluido no atributo <strong>style</strong> do botão.</p>
+                     </td>
+                 </tr>
+
+
+                 <tr>
+                     <th scope="row"><label for="button-icon">Ícone do Font Awesome (Free) </label></th>
+                     <td><input type="text" name="button-icon" type="text" id="button-icon" value="<?php echo $cbmdf_oauth_button_icon ?>">
+                         <p class="description">Consulte os ícones disponíveis em:
+                             <a href="https://fontawesome.com/icons?d=gallery&m=free" target="_blank"><strong>Font Awesome</strong></a>.
+                             e.g. <samp>fas fa-address-card</samp>
+
+                     </td>
+                 </tr>
              </tbody>
          </table>
 

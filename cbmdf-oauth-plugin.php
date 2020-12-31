@@ -60,6 +60,15 @@ class Plugin
             require("cbmdf-oauth-widget.php");
             register_widget('CBMDF\OAuth\Widget');
         });
+
+        $styles_path = plugin_dir_url(__FILE__) . "/assets/css/all.css";
+        //wp_register_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+        wp_register_style('font-awesome', $styles_path);
+        wp_enqueue_style('font-awesome');
+
+        wp_register_style('cbmdf-oauth', false);
+        wp_enqueue_style('cbmdf-oauth');
+        wp_add_inline_style('cbmdf-oauth', get_option('cbmdf_oauth_custom_css'));
     }
 
 
