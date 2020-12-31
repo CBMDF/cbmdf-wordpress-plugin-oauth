@@ -25,17 +25,24 @@
  <div class="wrap">
 
      <h1>Configurações de Autenticação OAuth</h1>
-     <form method="post" action="admin.php?page=cbmdf-oauth-options" novalidate="novalidate">
+
+     <p class="description">O protocolo <a href="https://www.oauth.com/" target="_blank">OAuth2</a> permite que o usuário realize uma autenticação em um servidor externo de confiança de modo que não seja necessário armazenar a senha ou outras informações. OAuth também é utilizado para prover recurso de Autenticação Única (Single Sign-On).</p>
+
+     <form method=" post" action="admin.php?page=cbmdf-oauth-options" novalidate="novalidate">
          <table class="form-table" role="presentation">
              <tbody>
                  <tr>
                      <th scope="row"><label for="client-id">Client ID</label></th>
-                     <td><input name="client-id" type="text" id="client-id" value="<?php echo $cbmdf_oauth_client_id; ?>" class="regular-text"></td>
+                     <td><input name="client-id" type="text" id="client-id" value="<?php echo $cbmdf_oauth_client_id; ?>" class="regular-text">
+                         <p class="description">O Client ID é um <strong>identificador público</strong> da sua aplicação.</p>
+                     </td>
                  </tr>
 
                  <tr>
                      <th scope="row"><label for="client-secret">Client Secret</label></th>
-                     <td><input name="client-secret" type="text" id="client-secret" value="<?php echo $cbmdf_oauth_client_secret; ?>" class="regular-text"></td>
+                     <td><input name="client-secret" type="text" id="client-secret" value="<?php echo $cbmdf_oauth_client_secret; ?>" class="regular-text">
+                         <p class="description">O Client Secret é um código de segurança conhecido apenas pela a aplicação e o servidor de autorizção.</p>
+                     </td>
                  </tr>
 
                  <tr>
