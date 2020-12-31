@@ -34,12 +34,12 @@ class Plugin
     public static function init()
     {
         // Inicializa a autenticação
-        add_action('init', array("\CBMDF\OAuth\Plugin", 'cbmdf_oauth_authenticate'));    
-        
+        add_action('init', array("\CBMDF\OAuth\Plugin", 'cbmdf_oauth_authenticate'));
 
-        add_shortcode( 'cbmdf_oauth', function( $atts ) {
-            require "src/views/button.php";                            
-            return $btn_cbmdf_oauth;
+
+        add_shortcode('cbmdf_oauth', function ($atts) {
+            require_once "src/views/button.php";
+            return get_cbmdf_oauth_button();
         });
 
         // Cria o menu administrativo        
@@ -60,7 +60,6 @@ class Plugin
             require("cbmdf-oauth-widget.php");
             register_widget('CBMDF\OAuth\Widget');
         });
-        
     }
 
 

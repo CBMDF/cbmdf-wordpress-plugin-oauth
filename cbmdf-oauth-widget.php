@@ -26,18 +26,8 @@ extends \WP_Widget
 
         // Configuração do Provider
         require "src/provider-conf.php";
+        require_once "src/views/button.php";
 
-        // Verificar se o usuário já está autenticado
-        $logout_url = site_url() . "/?cbmdf-oauth-logout";
-        $current_user = wp_get_current_user();
-        if (is_user_logged_in()) {
-            echo <<<EOF
-                <a href="{$logout_url}" >Logout de <strong>{$current_user->user_login}</strong>.</a>
-            EOF;
-        } else {
-            //Usuário não autenticado.
-            require "src/views/button.php";
-            echo $btn_cbmdf_oauth;
-        }
+        echo get_cbmdf_oauth_button();
     }
 }
