@@ -8,6 +8,7 @@
         update_option("cbmdf_oauth_token_uri", stripslashes(sanitize_text_field($_POST['token-uri'])));
         update_option("cbmdf_oauth_resource_uri", stripslashes(sanitize_text_field($_POST['resource-uri'])));
         update_option("cbmdf_oauth_logout_uri", stripslashes(sanitize_text_field($_POST['logout-uri'])));
+        update_option("cbmdf_oauth_redirect_uri", site_url());
         show_message("Configurações salvas!");
     }
 
@@ -28,7 +29,7 @@
 
      <p class="description">O protocolo <a href="https://www.oauth.com/" target="_blank">OAuth2</a> permite que o usuário realize uma autenticação em um servidor externo de confiança de modo que não seja necessário armazenar a senha ou outras informações. OAuth também é utilizado para prover recurso de Autenticação Única (Single Sign-On).</p>
 
-     <form method=" post" action="admin.php?page=cbmdf-oauth-options" novalidate="novalidate">
+     <form method="post" action="admin.php?page=cbmdf-oauth-options" novalidate="novalidate">
          <table class="form-table" role="presentation">
              <tbody>
                  <tr>

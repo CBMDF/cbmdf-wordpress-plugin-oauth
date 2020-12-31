@@ -28,11 +28,19 @@ class Plugin
      *
      * @return void 
      */
+
+
+
     public static function init()
     {
         // Inicializa a autenticação
-        add_action('init', array("\CBMDF\OAuth\Plugin", 'cbmdf_oauth_authenticate'));
+        add_action('init', array("\CBMDF\OAuth\Plugin", 'cbmdf_oauth_authenticate'));    
+        
 
+        add_shortcode( 'cbmdf_oauth', function( $atts ) {
+            require "src/views/button.php";                            
+            return $btn_cbmdf_oauth;
+        });
 
         // Cria o menu administrativo        
         add_action('admin_menu', function () {
@@ -52,22 +60,20 @@ class Plugin
             require("cbmdf-oauth-widget.php");
             register_widget('CBMDF\OAuth\Widget');
         });
+        
     }
 
 
-    public static  function cbmdf_oauth_settings_page()
+    public static function cbmdf_oauth_settings_page()
     {
         require("src/views/settings.php");
     }
-
-
-
 
     public static function cbmdf_oauth_authenticate()
     {
 
         // Configuração do Provider
-        require "provider-conf.php";
+        require "src/provider-conf.php";
 
         if (isset($_GET['cbmdf-oauth-logout'])) {
             wp_logout();
@@ -134,11 +140,12 @@ class Plugin
                     wp_set_current_user($user_id);
                     wp_set_auth_cookie($user_id);
                     wp_redirect(site_url());
-                    //var_dump($resourceOwner->toArray());
                     exit;
                 }
             } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
                 exit($e->getMessage());
+            } catch (\BadMethodCallException $e) {
+                wp_die($e->getMessage());
             }
         }
     }
