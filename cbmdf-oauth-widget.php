@@ -27,24 +27,18 @@ extends \WP_Widget
         // Configuração do Provider
         require "provider-conf.php";
 
-        if (isset($_POST['cbmdf-oauth-button'])) {
-            // Chamar rotina de autenticação.  
-
+        // Verificar se o usuário já está autenticado
+        $logout_url = site_url() . "/?cbmdf-oauth-logout";
+        $current_user = wp_get_current_user();
+        if (is_user_logged_in()) {
+            echo <<<EOF
+                <a href="{$logout_url}" >Logout de <strong>{$current_user->user_login}</strong>.</a>
+            EOF;
         } else {
-
-            // Verificar se o usuário já está autenticado
-            $logout_url = site_url() . "/?cbmdf-oauth-logout";
-            $current_user = wp_get_current_user();
-            if (is_user_logged_in()) {
-                echo <<<EOF
-                    <a href="{$logout_url}" >Logout de <strong>{$current_user->user_login}</strong>.</a>
-                EOF;
-            } else {
-                //Usuário não autenticado.
-                echo <<<EOF
-                    <form action="" method="post"><button type="submit" name="cbmdf-oauth-button" value="authenticate" style="padding:4px 20px;line-height:20px;">CBMDF OAuth</button></form>
-                EOF;
-            }
+            //Usuário não autenticado.
+            echo <<<EOF
+                <form action="" method="post"><button type="submit" name="cbmdf-oauth-button" value="authenticate" style="padding:4px 20px;line-height:20px;">CBMDF OAuth</button></form>
+            EOF;
         }
     }
 }
