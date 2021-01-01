@@ -115,7 +115,7 @@
 
                  <tr>
                      <th scope="row"><label for="custom-class">Classes Adicionais</label></th>
-                     <td><input type="text" class="large-text" name="custom-class" type="text" id="custom-class" value="<?php echo $cbmdf_oauth_custom_class ?>">
+                     <td><input type="text" name="custom-class" class="regular-text" type="text" id="custom-class" value="<?php echo $cbmdf_oauth_custom_class ?>">
                          <p class="description">Informar as classes que serão associadas ao atributo <i><strong>class</strong></i> do botão. Separar por espaço.
                          </p>
                          <p>Exemplo:
@@ -142,7 +142,7 @@
 
                  <tr>
                      <th scope="row"><label for="button-icon">Ícone do Font Awesome (Free) </label></th>
-                     <td><input type="text" name="button-icon" type="text" id="button-icon" value="<?php echo $cbmdf_oauth_button_icon ?>">
+                     <td><input type="text" class="regular-text" name="button-icon" type="text" id="button-icon" value="<?php echo $cbmdf_oauth_button_icon ?>">
                          <p class="description">Consulte os ícones disponíveis em:
                              <a href="https://fontawesome.com/icons?d=gallery&m=free" target="_blank"><strong>Font Awesome</strong></a>.
                              <p>Exemplo:
