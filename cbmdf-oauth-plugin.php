@@ -37,9 +37,9 @@ class Plugin
         add_action('init', array("\CBMDF\OAuth\Plugin", 'cbmdf_oauth_authenticate'));
 
 
-        add_shortcode('cbmdf_oauth', function ($atts) {
+        add_shortcode('cbmdf_oauth', function ($atts = []) {
             require_once "src/views/button.php";
-            return get_cbmdf_oauth_button();
+            return get_cbmdf_oauth_button($atts);
         });
 
         // Cria o menu administrativo        

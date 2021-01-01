@@ -1,10 +1,12 @@
 <?php
 
-function get_cbmdf_oauth_button($args, $instance)
+function get_cbmdf_oauth_button($args = array(), $instance = null)
 {
 
     if (!empty($instance['button_label'])) {
         $label = esc_html__($instance['button_label'], 'text_domain');;
+    } elseif (isset($args['button_label'])) {
+        $label = $args['button_label'];
     } else {
         $label = "CBMDF OAuth";
     }
