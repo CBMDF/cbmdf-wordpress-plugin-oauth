@@ -1,8 +1,13 @@
 <?php
 
-function get_cbmdf_oauth_button()
+function get_cbmdf_oauth_button($args, $instance)
 {
 
+    if (!empty($instance['button_label'])) {
+        $label = esc_html__($instance['button_label'], 'text_domain');;
+    } else {
+        $label = "CBMDF OAuth";
+    }
     $logout_url = site_url() . "/?cbmdf-oauth-logout";
     $current_user = wp_get_current_user();
     $cbmdf_oauth_custom_class = get_option("cbmdf_oauth_custom_class");
@@ -10,7 +15,7 @@ function get_cbmdf_oauth_button()
 
     $btn_cbmdf_oauth = <<<EOF
     <form action="" method="post">
-        <button type="submit" name="cbmdf-oauth-button" class="{$cbmdf_oauth_custom_class}" value="authenticate"><i class="{$cbmdf_oauth_button_icon}"></i> CBMDF OAuth</button>
+        <button type="submit" name="cbmdf-oauth-button" class="{$cbmdf_oauth_custom_class}" value="authenticate"><i class="{$cbmdf_oauth_button_icon}"></i> {$label}</button>
     </form>
     EOF;
 
