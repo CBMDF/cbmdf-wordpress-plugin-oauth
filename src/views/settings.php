@@ -37,7 +37,11 @@
 
      <h2>Parâmetros de autenticação do cliente</h2>
 
-     <p class="description">O protocolo <a href="https://www.oauth.com/" target="_blank">OAuth2</a> permite que o usuário realize uma autenticação em um servidor externo de confiança de modo que não seja necessário armazenar a senha ou outras informações. OAuth também é utilizado para prover recurso de Autenticação Única (Single Sign-On).</p>
+     <p class="description">O protocolo <a href="https://www.oauth.com/" target="_blank">OAuth2</a> permite que o usuário
+         realize uma autenticação em um servidor externo de confiança de modo que não seja necessário armazenar a senha
+         ou outras informações. OAuth também é utilizado para prover recurso de Autenticação Única (Single Sign-On).</p>
+
+     <p class="description">Esse plugin suporta o uso de shortcodes. Exemplo: <strong><samp>[cbmdf_oauth button_label="Autenticar com App"]</samp></strong></p>
 
      <form method="post" action="admin.php?page=cbmdf-oauth-options" novalidate="novalidate">
          <table class="form-table" role="presentation">
@@ -82,7 +86,10 @@
                      <th scope="row"><label for="logout-uri">Logout URI</label></th>
                      <td><input name="logout-uri" type="text" id="logout-uri" value="<?php echo $cbmdf_oauth_logout_uri; ?>" placeholder="e.g. https://sistemas.cbm.df.gov.br/sistemas/cerberusAuth/public/index/sair" class=" large-text">
                          <p class="description">Aqui você deve informar a URL para efetuar o logout no servidor OAuth. Alguns servidores implementam o recurso para redirecionar
-                             após o logout, se este for o caso você deve especificar manualmente o endereço para o qual deseja retornar. e.g. https://sistemas.cbm.df.gov.br/logout/<strong>?redirect_to=</strong>http://www.cbm.df.gov.br</p>
+                             após o logout, se este for o caso você deve especificar manualmente o endereço para o qual deseja retornar.</p>
+                         <p>Exemplo:<code>https://sistemas.cbm.df.gov.br/logout/<strong>?redirect_to=</strong>http://www.cbm.df.gov.br</code></p>
+
+
                      </td>
                  </tr>
 
@@ -109,7 +116,13 @@
                  <tr>
                      <th scope="row"><label for="custom-class">Classes Adicionais</label></th>
                      <td><input type="text" class="large-text" name="custom-class" type="text" id="custom-class" value="<?php echo $cbmdf_oauth_custom_class ?>">
-                         <p class="description">Informar as classes que serão associadas ao atributo <i><strong>class</strong></i> do botão. Separar por espaço. e.g. button-secondary my-icon</p>
+                         <p class="description">Informar as classes que serão associadas ao atributo <i><strong>class</strong></i> do botão. Separar por espaço.
+                         </p>
+                         <p>Exemplo:
+                             <strong><code>
+                                     button-secondary oauth-button
+                                 </code></strong>
+                         </p>
                      </td>
                  </tr>
 
@@ -117,6 +130,12 @@
                      <th scope="row"><label for="custom-css">CSS Personalizado</label></th>
                      <td><textarea cols="80" rows="10" name="custom-css" type="text" id="custom-css"><?php echo $cbmdf_oauth_custom_css ?></textarea>
                          <p class="description">Informar apenas o código CSS que será incluido no atributo <strong>style</strong> do botão.</p>
+                         <p>Exemplo:
+                             <strong><code>
+                                     .oauth-button{ padding: 4px 10px !important; border-radius: 5px !important; font-size: 90%; line-height: 20px; text-transform: none !important;}
+                                 </code></strong>
+                         </p>
+
                      </td>
                  </tr>
 
@@ -126,7 +145,9 @@
                      <td><input type="text" name="button-icon" type="text" id="button-icon" value="<?php echo $cbmdf_oauth_button_icon ?>">
                          <p class="description">Consulte os ícones disponíveis em:
                              <a href="https://fontawesome.com/icons?d=gallery&m=free" target="_blank"><strong>Font Awesome</strong></a>.
-                             e.g. <samp>fas fa-address-card</samp>
+                             <p>Exemplo:
+                                 <strong><code>fas fa-address-card</code></strong>
+                             </p>
 
                      </td>
                  </tr>
