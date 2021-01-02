@@ -8,12 +8,12 @@
         update_option("cbmdf_oauth_token_uri", stripslashes(sanitize_text_field($_POST['token-uri'])));
         update_option("cbmdf_oauth_resource_uri", stripslashes(sanitize_text_field($_POST['resource-uri'])));
         update_option("cbmdf_oauth_logout_uri", stripslashes(sanitize_text_field($_POST['logout-uri'])));
-        update_option("cbmdf_oauth_redirect_uri", site_url());
+        update_option("cbmdf_oauth_redirect_uri", stripslashes(sanitize_text_field($_POST['redirect-uri'])));
         update_option("cbmdf_oauth_custom_css", stripslashes(sanitize_text_field($_POST['custom-css'])));
         update_option("cbmdf_oauth_custom_class", stripslashes(sanitize_text_field($_POST['custom-class'])));
         update_option("cbmdf_oauth_button_icon", stripslashes(sanitize_text_field($_POST['button-icon'])));
 
-        show_message("<div class='notice-success inline'><p>Configurações salvas com sucesso!</p></div>");
+        show_message("<div class='notice notice-success inline'><p>Configurações salvas com sucesso!</p></div>");
     }
 
 
@@ -94,7 +94,7 @@
 
                  <tr>
                      <th scope="row"><label for="redirect-uri">Redirect URI</label></th>
-                     <td><input name="redirect-uri" type="text" readonly="readonly" id="redirect-uri" value="<?= $cbmdf_oauth_redirect_uri ?>" class=" large-text">
+                     <td><input name="redirect-uri" type="text" id="redirect-uri" placeholder="<?= site_url() ?>" value="<?= $cbmdf_oauth_redirect_uri ?>" class=" large-text">
                          <p class="description">Endereço de redirecionamento após obter o token de acesso.</p>
                      </td>
                  </tr>

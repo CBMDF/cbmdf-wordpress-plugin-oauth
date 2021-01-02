@@ -125,7 +125,7 @@ class Plugin
 
                 // Token Expirado
                 if ($accessToken->hasExpired()) {
-                    show_message("<div class='notice-error inline'><p>Token expirado!</p></div>");
+                    show_message("<div class='notice notice-error inline'><p>Token expirado!</p></div>");
 
                     // Verificar se o usuário existe
                 } else {
