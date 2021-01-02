@@ -34,13 +34,15 @@
 
      <h1>Configurações de Autenticação OAuth</h1>
 
-     <h2>Parâmetros de autenticação do cliente</h2>
 
-     <p class="description">O protocolo <a href="https://www.oauth.com/" target="_blank">OAuth2</a> permite que o usuário
+     <p>O protocolo <a href="https://www.oauth.com/" target="_blank">OAuth2</a> permite que o usuário
          realize uma autenticação em um servidor externo de confiança de modo que não seja necessário armazenar a senha
          ou outras informações. OAuth também é utilizado para prover recurso de Autenticação Única (Single Sign-On).</p>
+     <p>Esse plugin suporta o uso de shortcodes. Exemplo: <strong><samp>[cbmdf_oauth button_label="Autenticar com App"]</samp></strong></p>
 
-     <p class="description">Esse plugin suporta o uso de shortcodes. Exemplo: <strong><samp>[cbmdf_oauth button_label="Autenticar com App"]</samp></strong></p>
+     <hr />
+
+     <h2>Parâmetros de autenticação do cliente</h2>
 
      <form method="post" action="admin.php?page=cbmdf-oauth-options" novalidate="novalidate">
          <table class="form-table" role="presentation">
@@ -113,6 +115,25 @@
              <tbody>
 
                  <tr>
+                     <th scope="row"><label for="button-icon">Ícone do Botão</label></th>
+                     <td>
+                         <select class="fa" name="button-icon" style="font-size:200%;">
+                             <option class="fa" default="default" value="fas fa-address-card">&#xf2bb</option>
+                             <option class="fa" value="fas fa-user-lock">&#xf502</option>
+                             <option class="fa" value="fas fa-user">&#xf007</option>
+                             <option class="fa" value="fas fa-id-card">&#xf2c2</option>
+                             <option class="fa" value="fas fa-id-card-alt">&#xf47f</option>
+                             <option class="fa" value="fas fa-id-badge">&#xf2c1</option>
+                             <option class="fa" value="fas fa-key">&#xf084</option>
+                             <option class="fa" value="fas fa-passport">&#xf5ab</option>
+                             <option class="fa" value="fas fa-unlock-alt">&#xf13e</option>
+                             <option class="fa" value="fas fa-sign-in-alt">&#xf2f6</option>
+                         </select>
+
+                     </td>
+                 </tr>
+
+                 <tr>
                      <th scope="row"><label for="custom-class">Classes Adicionais</label></th>
                      <td><input type="text" name="custom-class" class="regular-text" type="text" id="custom-class" value="<?php echo $cbmdf_oauth_custom_class ?>">
                          <p class="description">Informar as classes que serão associadas ao atributo <i><strong>class</strong></i> do botão. Separar por espaço.
@@ -134,19 +155,6 @@
                                      .oauth-button{ padding: 4px 10px !important; border-radius: 5px !important; font-size: 90%; line-height: 20px; text-transform: none !important;}
                                  </code></strong>
                          </p>
-
-                     </td>
-                 </tr>
-
-
-                 <tr>
-                     <th scope="row"><label for="button-icon">Ícone do Font Awesome (Free) </label></th>
-                     <td><input type="text" class="regular-text" name="button-icon" type="text" id="button-icon" value="<?php echo $cbmdf_oauth_button_icon ?>">
-                         <p class="description">Consulte os ícones disponíveis em:
-                             <a href="https://fontawesome.com/icons?d=gallery&m=free" target="_blank"><strong>Font Awesome</strong></a>.
-                             <p>Exemplo:
-                                 <strong><code>fas fa-address-card</code></strong>
-                             </p>
 
                      </td>
                  </tr>
