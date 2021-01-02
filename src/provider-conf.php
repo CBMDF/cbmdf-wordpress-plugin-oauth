@@ -1,4 +1,6 @@
 <?php
+if (!defined('ABSPATH')) exit; // Exit if accessed directly
+
 $cbmdf_oauth_client_id = get_option("cbmdf_oauth_client_id");
 $cbmdf_oauth_client_secret  = get_option("cbmdf_oauth_client_secret");
 $cbmdf_oauth_redirect_uri  = get_option("cbmdf_oauth_redirect_uri");

@@ -1,4 +1,5 @@
 <?php
+if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 function get_cbmdf_oauth_button($args = array(), $instance = null)
 {

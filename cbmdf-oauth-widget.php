@@ -2,6 +2,8 @@
 
 namespace CBMDF\OAuth;
 
+if (!defined('ABSPATH')) exit; // Exit if accessed directly
+
 require("vendor/autoload.php");
 
 

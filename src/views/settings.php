@@ -1,4 +1,5 @@
  <?php
+    if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
     if (isset($_POST["btn-save-cbmdf-oauth-settings"])) {
         // If the option does not exist, it will be created.
@@ -136,7 +137,7 @@
                  <tr>
                      <th scope="row"><label for="custom-class">Classes Adicionais</label></th>
                      <td><input type="text" name="custom-class" class="regular-text" type="text" id="custom-class" value="<?php echo $cbmdf_oauth_custom_class ?>">
-                         <p class="description">Informar as classes que serão associadas ao atributo <i><strong>class</strong></i> do botão. Separar por espaço.
+                         <p class="description">Informar as classes que serão associadas ao atributo <strong>class</strong> do botão. Separar por espaço.
                          </p>
                          <p>Exemplo:
                              <strong><code>
@@ -149,7 +150,7 @@
                  <tr>
                      <th scope="row"><label for="custom-css">CSS Personalizado</label></th>
                      <td><textarea cols="80" rows="10" name="custom-css" type="text" id="custom-css"><?php echo $cbmdf_oauth_custom_css ?></textarea>
-                         <p class="description">Informar apenas o código CSS que será incluido no atributo <strong>style</strong> do botão.</p>
+                         <p class="description">O bloco de código CSS será incluído no <strong>header</strong> da página.</p>
                          <p>Exemplo:
                              <strong><code>
                                      .oauth-button{ padding: 4px 10px !important; border-radius: 5px !important; font-size: 90%; line-height: 20px; text-transform: none !important;}
