@@ -72,6 +72,7 @@ class Plugin
         });
     }
 
+
     public static function cbmdf_oauth_settings_page()
     {
         require("src/views/settings.php");
@@ -124,7 +125,7 @@ class Plugin
 
                 // Token Expirado
                 if ($accessToken->hasExpired()) {
-                    show_message("Token Expirado");
+                    show_message("<div class='notice-error inline'><p>Token expirado!</p></div>");
 
                     // Verificar se o usuário existe
                 } else {

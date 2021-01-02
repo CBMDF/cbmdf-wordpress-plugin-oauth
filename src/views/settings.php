@@ -13,8 +13,7 @@
         update_option("cbmdf_oauth_custom_class", stripslashes(sanitize_text_field($_POST['custom-class'])));
         update_option("cbmdf_oauth_button_icon", stripslashes(sanitize_text_field($_POST['button-icon'])));
 
-
-        show_message("Configurações salvas!");
+        show_message("<div class='notice-success inline'><p>Configurações salvas com sucesso!</p></div>");
     }
 
 
