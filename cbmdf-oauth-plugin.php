@@ -10,13 +10,13 @@ class Plugin
 
     /**
      * Plugin Name:         CBMDF OAuth
-     * Plugin URI:          https://github.com/CBMDF/wordpress_plugin_oauth
-     * Description:         Autenticação no servidor OAuth do CBMDF.
-     * Version:             1.0.0
-     * Requires at last:    5.3
+     * Plugin URI:          https://github.com/CBMDF/cbmdf-oauth-plugin-wordpress
+     * Description:         Plugin para autenticação no servidor OAuth do CBMDF.
+     * Version:             1.2.0
+     * Requires at last:    5.6
      * Requires PHP:        5.6
-     * Text Domain:         cbmdf
-     * Domain Path:         /public/lang
+     * Text Domain:         cbmdf_oauth
+     * Domain Path:         /languages
      * Author:              CBMDF
      * Author URI:          https://github.com/CBMDF/
      * License:             GPL v2 or later
