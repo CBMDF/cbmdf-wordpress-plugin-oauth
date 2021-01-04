@@ -25,9 +25,9 @@ class Options
 
     /**
      * Opções de configuração válidas para salvar em banco de dados.
-     * @var array
+
      */
-    protected $valid_options = [
+    const VALID_OPTIONS = [
         "client_id",
         "client_secret",
         "authorize_uri",
@@ -82,7 +82,7 @@ class Options
     private function set_options($data)
     {
         foreach ($data as $option => $value) {
-            if (in_array($option, $this->valid_options)) {
+            if (in_array($option, Options::VALID_OPTIONS)) {
                 $this->options[$option] = stripslashes(sanitize_text_field($value));
             }
         }
