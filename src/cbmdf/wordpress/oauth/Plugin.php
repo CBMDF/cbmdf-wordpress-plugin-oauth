@@ -14,10 +14,18 @@ class Plugin
 
     public static function init()
     {
-        // Realiza a verificação de logout.
+
+        // Realiza as configurações de inicialização, login, logout e a inclusão de estilos CSS e scripts no header.
         add_action('init', function () {
             self::logout();
             self::login();
+
+            $styles_path = plugin_dir_url(__FILE__) . "/public/css/all.css";
+            wp_register_style('font-awesome', $styles_path);
+            wp_register_style('cbmdf-oauth', false);
+            wp_enqueue_style('font-awesome');
+            wp_enqueue_style('cbmdf-oauth');
+            wp_add_inline_style('cbmdf-oauth', Options::get_instance()->get('custom_css'));
         });
 
 
@@ -45,16 +53,6 @@ class Plugin
         // Registra o Widget
         add_action('widgets_init', function () {
             register_widget('CBMDF\WordPress\OAuth\Widget');
-        });
-
-        // Inclui estilos CSS e scripts no header.
-        add_action('wp_enqueue_scripts', function () {
-            $styles_path = plugin_dir_url(__FILE__) . "/public/css/all.css";
-            wp_register_style('font-awesome', $styles_path);
-            wp_register_style('cbmdf-oauth', false);
-            wp_enqueue_style('font-awesome');
-            wp_enqueue_style('cbmdf-oauth');
-            wp_add_inline_style('cbmdf-oauth', Options::get_instance()->get('custom_css'));
         });
     }
 
