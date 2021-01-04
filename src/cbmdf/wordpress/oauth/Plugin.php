@@ -17,6 +17,12 @@ class Plugin
 
         // Realiza as configurações de inicialização, login, logout e a inclusão de estilos CSS e scripts no header.
         add_action('init', function () {
+
+            // Inicializa a sessão
+            if (!session_id()) {
+                session_start();
+            }
+
             self::logout();
             self::login();
 
@@ -27,7 +33,6 @@ class Plugin
             wp_enqueue_style('cbmdf-oauth');
             wp_add_inline_style('cbmdf-oauth', Options::get_instance()->get('custom_css'));
         });
-
 
 
         //Registra do menu administrativo
@@ -73,9 +78,6 @@ class Plugin
         // Recupera o state gerado e grava na sessão.
         $_SESSION['oauth2state'] = $provider->getState();
 
-        //echo '<pre>';
-        //var_dump($provider->getState());
-
         if (isset($_POST['cbmdf-oauth-button'])) {
 
             $authorizationUrl = $provider->getAuthorizationUrl();
@@ -114,6 +116,8 @@ class Plugin
                     $username = $resourceOwner->toArray()['num_cpf_pessoa'];
                     $email = $resourceOwner->toArray()['dsc_email'];
                     $user_id = username_exists($username);
+
+                    // Se o usuário não existe, cria um novo.
                     if (!$user_id) {
 
                         $userdata = array(
