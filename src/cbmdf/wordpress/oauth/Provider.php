@@ -10,9 +10,6 @@ class Provider
     public static function get_provider()
     {
         $options = Options::get_instance();
-        /*         echo '<pre>';
-        var_dump($options);
-        die; */
 
         $provider = new \League\OAuth2\Client\Provider\GenericProvider([
             'clientId'                => $options->get('client_id'),
