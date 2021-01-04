@@ -1,5 +1,10 @@
 {
-    "require": {
-        "league/oauth2-client": "^2.6"
+  "require": {
+    "league/oauth2-client": "^2.6"
+  },
+  "autoload": {
+    "psr-0": {
+      "CBMDF": "src"
     }
+  }
 }
