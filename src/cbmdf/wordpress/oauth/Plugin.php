@@ -70,11 +70,15 @@ class Plugin
         $options = Options::get_instance();
         $provider = Provider::get_provider();
 
+        // Recupera o state gerado e grava na sessão.
+        $_SESSION['oauth2state'] = $provider->getState();
+
+        //echo '<pre>';
+        //var_dump($provider->getState());
+
         if (isset($_POST['cbmdf-oauth-button'])) {
 
             $authorizationUrl = $provider->getAuthorizationUrl();
-
-            // Recupera o state gerado e grava na sessão.
             $_SESSION['oauth2state'] = $provider->getState();
 
             // Redireciona o usuário para a URI de autorização.
@@ -83,7 +87,6 @@ class Plugin
         } elseif (empty($_GET['state']) || (isset($_SESSION['oauth2state']) && $_GET['state'] !== $_SESSION['oauth2state'])) {
             if (isset($_SESSION['oauth2state'])) {
                 unset($_SESSION['oauth2state']);
-                wp_die('Invalid state');
             }
         } else {
 
@@ -125,7 +128,7 @@ class Plugin
 
                     wp_set_current_user($user_id);
                     wp_set_auth_cookie($user_id);
-                    wp_redirect(site_url());
+                    wp_redirect($options->get('redirect_uri'));
                     exit;
                 }
             } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
