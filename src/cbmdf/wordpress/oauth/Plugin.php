@@ -64,7 +64,7 @@ class Plugin
      */
     public static function activate()
     {
-        add_option('cbmdf_oauth_activation', array('\CBMDF\OAuth\Activator', 'activate'));
+        add_option('cbmdf_oauth_activation', array('CBMDF\WordPress\OAuth\Activator', 'activate'));
     }
 
     public static function login()

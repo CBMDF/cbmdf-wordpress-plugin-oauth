@@ -22,6 +22,6 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 require("vendor/autoload.php");
 
 // Activation hook
-register_activation_hook(__FILE__, array('\CBMDF\OAuth\Plugin', 'activate'));
+register_activation_hook(__FILE__, array('CBMDF\WordPress\OAuth\Plugin', 'activate'));
 
 Plugin::init();

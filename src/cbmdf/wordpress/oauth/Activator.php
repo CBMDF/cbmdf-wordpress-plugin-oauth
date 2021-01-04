@@ -21,8 +21,6 @@ class Activator
      */
     public static function activate()
     {
-
-        die("ativado");
         $role = get_role('administrator');
         if (!empty($role)) {
             $role->add_cap('cbmdf_oauth_manage');
