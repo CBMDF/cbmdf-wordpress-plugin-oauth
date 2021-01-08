@@ -202,6 +202,9 @@ class Settings
                     <hr />
 
                     <h2>Criação do Usuário no WordPress</h2>
+
+                    <p >Nesta seção você pode especificar qual propriedade e/ou valor devem ser retornadas pelo servidor OAuth para o usuário.</p>
+
                     <table class="form-table" role="presentation">
                         <tbody>
 
@@ -215,7 +218,20 @@ class Settings
                                 </td>
                             </tr>
 
-                                                <tr>
+
+                            <tr>
+                                <th scope="row"><label for="button_icon">Combinação dos critérios</label></th>
+                                <td>                                    
+                                   <select name="aditional_value_criteria" >
+                                   <option value="and">Exigir ambos</option>
+                                   <option value="or">Um ou outro</option>
+                                   </select>                                    
+
+                                </td>
+                            </tr>
+
+
+                            <tr>
                                 <th scope="row"><label for="button_icon">Exigir valor adicional</label></th>
                                 <td>                                    
                                     <input type="checkbox" id="cbmdf-oauth-toggle-aditional">
