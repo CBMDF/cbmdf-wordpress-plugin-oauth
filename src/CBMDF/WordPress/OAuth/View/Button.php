@@ -29,7 +29,7 @@ class Button
 
         $btn_cbmdf_oauth = <<<OUTPUT
             <form action="" method="post">
-                <button type="submit" name="cbmdf-oauth-button" class="{$custom_class}" value="authenticate"><i class="{$button_icon}"></i> {$label}</button>
+                <button type="submit" name="cbmdf-oauth-button" class="{$custom_class}" value="authenticate"><i class="{$button_icon}"></i>&nbsp;{$label}</button>
             </form>
             OUTPUT;
 
