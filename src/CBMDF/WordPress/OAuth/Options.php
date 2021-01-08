@@ -37,7 +37,9 @@ class Options
         "redirect_uri",
         "button_icon",
         "custom_class",
-        "custom_css"
+        "custom_css",
+        "aditional_property",
+        "aditional_value"
     ];
 
     private function __construct()

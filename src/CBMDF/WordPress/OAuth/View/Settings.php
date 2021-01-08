@@ -198,6 +198,39 @@ class Settings
                             </tr>
                         </tbody>
                     </table>
+
+                    <hr />
+
+                    <h2>Criação do Usuário no WordPress</h2>
+                    <table class="form-table" role="presentation">
+                        <tbody>
+
+                            <tr>
+                                <th scope="row"><label for="button_icon">Exigir propriedade adicional</label></th>
+                                <td>                                    
+                                    <input type="checkbox" id="cbmdf-oauth-toggle-aditional">
+                                    <input class="cbmdf-oauth-aditional-property regular-text" type="text" 
+                                    name="aditional_property" id="cbmdf-oauth-aditional-property" />
+                                    <p class="description">O usuário só será criado no WordPress caso as informações do usuário retornadas pelo servidor OAuth contenham a <strong>proriedade</strong> especificada.</p>
+                                </td>
+                            </tr>
+
+                                                <tr>
+                                <th scope="row"><label for="button_icon">Exigir valor adicional</label></th>
+                                <td>                                    
+                                    <input type="checkbox" id="cbmdf-oauth-toggle-aditional">
+                                    <input class="cbmdf-oauth-aditional-value regular-text" type="text" 
+                                    name="aditional_value" id="cbmdf-oauth-aditional-value" />
+                                    <p class="description">O usuário só será criado no WordPress caso as informações do usuário retornadas pelo servidor OAuth contenham o <strong>valor</strong> especificado.</p>
+
+                                </td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+
+
                     <input type="submit" class="button button-primary" name="btn-save-cbmdf-oauth-settings" value="Salvar alterações" />
                 </form>
             </div>

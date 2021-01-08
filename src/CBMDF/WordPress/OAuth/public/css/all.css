@@ -4617,3 +4617,22 @@ readers do not read off random characters that represent icons */
 .fas {
   font-family: 'Font Awesome 5 Free';
   font-weight: 900; }
+
+#cbmdf-oauth-aditional-property
+{
+  visibility: hidden;
+}
+
+#cbmdf-oauth-toggle-aditional:checked ~ #cbmdf-oauth-aditional-property{
+    visibility: visible;
+}
+
+
+#cbmdf-oauth-aditional-value
+{
+  visibility: hidden;
+}
+
+#cbmdf-oauth-toggle-aditional:checked ~ #cbmdf-oauth-aditional-value{
+    visibility: visible;
+}
