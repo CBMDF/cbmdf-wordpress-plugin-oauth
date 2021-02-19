@@ -121,7 +121,7 @@ class Plugin
                     if (!$user_id) {
 
                         $userdata = array(
-                            'user_email'            => $email,   //(string) The user email address.
+                            'user_email'            => strtolower($email),   //(string) The user email address.
                             'user_pass'             => wp_generate_password(),
                             'user_login'            => $username,
                             'show_admin_bar_front'  => "false",
