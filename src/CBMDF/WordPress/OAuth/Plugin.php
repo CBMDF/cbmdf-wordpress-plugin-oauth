@@ -112,7 +112,7 @@ class Plugin
 
                     // Verificar se o usuário existe
                 } else {
-
+                    
                     $username = $resourceOwner->toArray()['num_cpf_pessoa'];
                     $email = $resourceOwner->toArray()['dsc_email'];
                     $user_id = username_exists($username);
