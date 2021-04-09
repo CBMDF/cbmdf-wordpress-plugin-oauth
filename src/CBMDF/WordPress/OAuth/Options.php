@@ -39,7 +39,8 @@ class Options
         "custom_class",
         "custom_css",
         "aditional_property",
-        "aditional_value"
+        "aditional_value",
+        "ignore_certificate_errors"
     ];
 
     private function __construct()
@@ -82,7 +83,7 @@ class Options
      * @return void 
      */
     private function set_options($data)
-    {
+    {        
         foreach ($data as $option => $value) {
             if (in_array($option, Options::VALID_OPTIONS)) {
                 $this->options[$option] = stripslashes(sanitize_text_field($value));

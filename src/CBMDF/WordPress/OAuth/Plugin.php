@@ -72,74 +72,78 @@ class Plugin
 
     public static function login()
     {
-        $options = Options::get_instance();
-        $provider = Provider::get_provider();
+        try {
 
-        // Recupera o state gerado e grava na sessão.
-        $_SESSION['oauth2state'] = $provider->getState();
+            $options = Options::get_instance();
+            $provider = Provider::get_provider();
 
-        if (isset($_POST['cbmdf-oauth-button'])) {
-
-            $authorizationUrl = $provider->getAuthorizationUrl();
+            // Recupera o state gerado e grava na sessão.
             $_SESSION['oauth2state'] = $provider->getState();
 
-            // Redireciona o usuário para a URI de autorização.
-            header('Location: ' . $authorizationUrl);
-            exit;
-        } elseif (empty($_GET['state']) || (isset($_SESSION['oauth2state']) && $_GET['state'] !== $_SESSION['oauth2state'])) {
-            if (isset($_SESSION['oauth2state'])) {
-                unset($_SESSION['oauth2state']);
-            }
-        } else {
+            if (isset($_POST['cbmdf-oauth-button'])) {
 
-            try {
+                $authorizationUrl = $provider->getAuthorizationUrl();
+                $_SESSION['oauth2state'] = $provider->getState();
 
-                $accessToken = $provider->getAccessToken('authorization_code', [
-                    'code' => $_GET['code']
-                ]);
-
-                $resourceOwner = $provider->getResourceOwner($accessToken);
-
-                $request = $provider->getAuthenticatedRequest(
-                    'GET',
-                    $options->get('resource_uri'),
-                    $accessToken
-                );
-
-                // Token Expirado
-                if ($accessToken->hasExpired()) {
-                    show_message("<div class='notice notice-error inline'><p>Token expirado!</p></div>");
-
-                    // Verificar se o usuário existe
-                } else {
-                    
-                    $username = $resourceOwner->toArray()['num_cpf_pessoa'];
-                    $email = $resourceOwner->toArray()['dsc_email'];
-                    $user_id = username_exists($username);
-
-                    // Se o usuário não existe, cria um novo.
-                    if (!$user_id) {
-
-                        $userdata = array(
-                            'user_email'            => strtolower($email),   //(string) The user email address.
-                            'user_pass'             => wp_generate_password(),
-                            'user_login'            => $username,
-                            'show_admin_bar_front'  => "false",
-                        );
-
-                        $user_id = wp_insert_user($userdata);
-                    }
-
-                    wp_set_current_user($user_id);
-                    wp_set_auth_cookie($user_id);
-                    wp_redirect($options->get('redirect_uri'));
-                    exit;
+                // Redireciona o usuário para a URI de autorização.
+                header('Location: ' . $authorizationUrl);
+                exit;
+            } elseif (empty($_GET['state']) || (isset($_SESSION['oauth2state']) && $_GET['state'] !== $_SESSION['oauth2state'])) {
+                if (isset($_SESSION['oauth2state'])) {
+                    unset($_SESSION['oauth2state']);
                 }
-            } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
-                exit($e->getMessage());
-            } catch (\BadMethodCallException $e) {
-                wp_die($e->getMessage());
+            } else {
+
+                
+
+                    $accessToken = $provider->getAccessToken('authorization_code', [
+                        'code' => $_GET['code']
+                    ]);
+
+                    $resourceOwner = $provider->getResourceOwner($accessToken);
+
+                    $request = $provider->getAuthenticatedRequest(
+                        'GET',
+                        $options->get('resource_uri'),
+                        $accessToken
+                    );
+
+                    // Token Expirado
+                    if ($accessToken->hasExpired()) {
+                        show_message("<div class='notice notice-error inline'><p>Token expirado!</p></div>");
+
+                        // Verificar se o usuário existe
+                    } else {
+                        
+                        $username = $resourceOwner->toArray()['num_cpf_pessoa'];
+                        $email = $resourceOwner->toArray()['dsc_email'];
+                        $user_id = username_exists($username);
+
+                        // Se o usuário não existe, cria um novo.
+                        if (!$user_id) {
+
+                            $userdata = array(
+                                'user_email'            => strtolower($email),   //(string) The user email address.
+                                'user_pass'             => wp_generate_password(),
+                                'user_login'            => $username,
+                                'show_admin_bar_front'  => "false",
+                            );
+
+                            $user_id = wp_insert_user($userdata);
+                        }
+
+                        wp_set_current_user($user_id);
+                        wp_set_auth_cookie($user_id);
+                        wp_redirect($options->get('redirect_uri'));
+                        exit;
+                    }
             }
+        } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
+            exit($e->getMessage());
+        } catch (\BadMethodCallException $e) {
+            wp_die($e->getMessage());
+        } catch (\Throwable $t) {
+            wp_die("<p>Ocorreu um erro de autenticação no plugin CBMDF OAuth.<br/>Você pode tentar ativar a opção 'Ignorar erros de certificado' nas configurações do plugin.</p>");
         }
     }
 

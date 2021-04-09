@@ -75,6 +75,9 @@ class Settings
             return $name;
         };
 
+        
+        $selected_true = selected( $options->get('ignore_certificate_errors'), 1 , false);        
+        $selected_false = selected( $options->get('ignore_certificate_errors'), 0 , false);        
 
         return <<<OUTPUT
             <div class="wrap">
@@ -147,6 +150,17 @@ class Settings
                                     <p class="description">Endereço de redirecionamento após obter o token de acesso.</p>
                                 </td>
                             </tr>
+
+                            <tr>
+                            <th scope="row"><label for="button_icon">Ignorar erros de certificado</label></th>
+                            <td> 
+                                <select name="ignore_certificate_errors">                          
+                                <option value="0" {$selected_false}>Não</option>
+                                <option value="1" {$selected_true}>Sim</option>                                
+                                </select>
+                                <p class="description">Ignorar erros de certificado tais como expirados ou auto-assinados.</p>
+                            </td>
+                        </tr>
 
 
 
