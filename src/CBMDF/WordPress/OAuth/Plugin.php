@@ -2,12 +2,10 @@
 
 namespace CBMDF\WordPress\OAuth;
 
-//use CBMDF\WordPress\OAuth\Options;
 use CBMDF\WordPress\OAuth\View\Settings;
 use CBMDF\WordPress\OAuth\View\Button;
+use CBMDF\WordPress\OAuth\Options;
 use CBMDF\WordPress\OAuth\Provider;
-
-//include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
