@@ -4636,3 +4636,12 @@ readers do not read off random characters that represent icons */
 #cbmdf-oauth-toggle-aditional:checked ~ #cbmdf-oauth-aditional-value{
     visibility: visible;
 }
+
+#cbmdf-oauth-group-registered
+{
+  visibility: hidden;
+}
+
+#cbmdf-oauth-toggle-aditional:checked ~ #cbmdf-oauth-group-registered{
+  visibility: visible;
+}

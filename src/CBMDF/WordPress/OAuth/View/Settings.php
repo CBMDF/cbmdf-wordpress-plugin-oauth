@@ -13,7 +13,6 @@ if (!defined('ABSPATH')) exit; // Finaliza a execução se o arquivo é acessado
  */
 class Settings
 {
-
     /**
      * @see https://fontawesome.com/icons?d=gallery&m=free
      */
@@ -60,11 +59,12 @@ class Settings
     {
         $options = Options::get_instance();
 
+        add_action( 'admin_menu', 'my_admin_plugin' );
+
         if (isset($_POST['btn-save-cbmdf-oauth-settings'])) {
             $options->save($_POST);
             show_message("<div class='notice notice-success inline'><p>Configurações salvas com sucesso!</p></div>");
         }
-
 
         $site_url = site_url();
 
@@ -75,15 +75,34 @@ class Settings
             return $name;
         };
 
-        
         $selected_true = selected( $options->get('ignore_certificate_errors'), 1 , false);        
-        $selected_false = selected( $options->get('ignore_certificate_errors'), 0 , false);        
+        $selected_false = selected( $options->get('ignore_certificate_errors'), 0 , false);
+        
+        $selected_login_true = selected( $options->get('complement_login'), 1 , false);
+        $selected_login_false = selected( $options->get('complement_login'), 0 , false);
+
+        if(!empty($options->get('name_grupo_registered')))
+            $checked = "checked='checked'";
+        else
+            $checked = "";
 
         return <<<OUTPUT
+            <script>
+                jQuery(function(){
+                    jQuery("#complement_login").change(function (){
+                        var complemento = jQuery(this).val();
+                        if(complemento == 0){
+                            jQuery(".hidden-complemento").hide();
+                        }
+                        else{
+                            jQuery(".hidden-complemento").show();
+                        }
+                    });
+                });
+            </script>
             <div class="wrap">
 
                 <h1>Configurações de Autenticação OAuth</h1>
-
 
                 <p>O protocolo <a href="https://www.oauth.com/" target="_blank">OAuth2</a> permite que o usuário
                     realize uma autenticação em um servidor externo de confiança de modo que não seja necessário armazenar a senha
@@ -132,7 +151,6 @@ class Settings
                                 </td>
                             </tr>
 
-
                             <tr>
                                 <th scope="row"><label for="logout_uri">Logout URI</label></th>
                                 <td><input name="logout_uri" type="text" id="logout_uri" value="{$options->get('logout_uri')}" placeholder="e.g. https://sistemas.cbm.df.gov.br/oauth/logout" class=" large-text">
@@ -152,19 +170,79 @@ class Settings
                             </tr>
 
                             <tr>
-                            <th scope="row"><label for="button_icon">Ignorar erros de certificado</label></th>
-                            <td> 
-                                <select name="ignore_certificate_errors">                          
-                                <option value="0" {$selected_false}>Não</option>
-                                <option value="1" {$selected_true}>Sim</option>                                
-                                </select>
-                                <p class="description">Ignorar erros de certificado tais como expirados ou auto-assinados.</p>
-                            </td>
-                        </tr>
+                                <th scope="row"><label for="button_icon">Ignorar erros de certificado</label></th>
+                                <td> 
+                                    <select name="ignore_certificate_errors">                          
+                                    <option value="0" {$selected_false}>Não</option>
+                                    <option value="1" {$selected_true}>Sim</option>                                
+                                    </select>
+                                    <p class="description">Ignorar erros de certificado tais como expirados ou auto-assinados.</p>
+                                </td>
+                            </tr>
 
+                        </tbody>
+                    </table>
 
+                    <hr />
 
+                    <h2>Complemento de Login</h2>
+                    <table class="form-table" role="presentation">
+                        <tbody>
+                            <tr>
+                                <th scope="row"><label for="button_icon">Usar Complemento de Login</label></th>
+                                <td> 
+                                    <select name="complement_login" id="complement_login">                          
+                                        <option value="0" {$selected_login_false}>Não</option>
+                                        <option value="1" {$selected_login_true}>Sim</option>                                
+                                    </select>
+                                    <p class="description">Complemento de login permite associar usuários a grupos de acordo com os seus perfis advindos de uma API externa. É <strong>necessário</strong> ter o plugin Groups da itthinx <strong>instalado</strong> e <strong>ativado</strong> em seu site.</p>
+                                </td>
+                            </tr>
+                            
+                            <tr class="hidden-complemento">
+                                <th scope="row"><label for="locate_plugin">Localização do Plugin de Groups no servidor</label></th>
+                                <td><input name="locate_plugin" type="text" id="locate_plugin" placeholder="groups/groups.php" value="{$options->get('locate_plugin')}" class=" large-text">
+                                    <p class="description">Local do plugin de groups. Ex.: groups/groups.php.</p>
+                                </td>
+                            </tr>
 
+                            <tr class="hidden-complemento">
+                                <th scope="row"><label for="groups">Site do Plugin de Groups</label></th>
+                                <td><input name="groups" type="text" id="groups" placeholder="https://wordpress.org/plugins/groups" value="{$options->get('groups')}" class=" large-text">
+                                    <p class="description">Site do plugin de groups. Ex.: https://wordpress.org/plugins/groups.</p>
+                                </td>
+                            </tr>
+
+                            <tr class="hidden-complemento">
+                                <th scope="row"><label for="list_other_redirect">Perfis que serão redirecionado para outro lugar</label></th>
+                                <td><input name="list_other_redirect" type="text" id="list_other_redirect" placeholder="PERFIL_1; PERFIL_X" value="{$options->get('list_other_redirect')}" class=" large-text">
+                                    <p class="description">Lista de perfis que serão redirecionados para outro local separados por ponto e vírgula (;). Ex: PERFIL_1; PERFIL_X</p>
+                                </td>
+                            </tr>
+
+                            <tr class="hidden-complemento">
+                                <th scope="row"><label for="page_redirect">URL de Redirecionamento para os perfis da lista acima</label></th>
+                                <td><input name="page_redirect" type="text" id="page_redirect" placeholder="" value="{$options->get('page_redirect')}" class=" large-text">
+                                    <p class="description">Endereço de redirecionamento para os perfis escolhidos na lista acima.</p>
+                                </td>
+                            </tr>
+                            
+                            <tr class="hidden-complemento">
+                                <th scope="row"><label for="external_api_perfis">Link da API</label></th>
+                                <td><input name="external_api_perfis" type="text" id="external_api_perfis" placeholder="{$site_url}" value="{$options->get('external_api_perfis')}" class=" large-text">
+                                    <p class="description">Link da API externa para busca de perfis. O retorno da API deve ser um JSON com a lista de perfis. Lembrando que o token gerado pelo o OAuth2 é passado no corpo da requisição da API.</p>
+                                </td>
+                            </tr>
+
+                            <tr class="hidden-complemento">
+                                <th scope="row"><label for="button_icon">Remover do grupo Registrado</label></th>
+                                <td>                                    
+                                    <input type="checkbox" id="cbmdf-oauth-toggle-aditional" $checked>
+                                    <input class="cbmdf-oauth-group-registered regular-text" type="text" 
+                                    name="name_grupo_registered" value="{$options->get('name_grupo_registered')}" id="cbmdf-oauth-group-registered" />
+                                    <p class="description">O usuário será removido do grupo <strong>Registrado</strong>. Digite o nome do grupo Registrado do seu site, geralmente é Registered.</p>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
 
@@ -221,18 +299,15 @@ class Settings
 
                     <table class="form-table" role="presentation">
                         <tbody>
-
                             <tr>
                                 <th scope="row"><label for="button_icon">Exigir propriedade adicional</label></th>
                                 <td>                                    
                                     <input type="checkbox" id="cbmdf-oauth-toggle-aditional">
                                     <input class="cbmdf-oauth-aditional-property regular-text" type="text" 
                                     name="aditional_property" id="cbmdf-oauth-aditional-property" />
-                                    <p class="description">O usuário só será criado no WordPress caso as informações do usuário retornadas pelo servidor OAuth contenham a <strong>proriedade</strong> especificada.</p>
+                                    <p class="description">O usuário só será criado no WordPress caso as informações do usuário retornadas pelo servidor OAuth contenham a <strong>propriedade</strong> especificada.</p>
                                 </td>
                             </tr>
-
-
                             <tr>
                                 <th scope="row"><label for="button_icon">Combinação dos critérios</label></th>
                                 <td>                                    
@@ -243,8 +318,6 @@ class Settings
 
                                 </td>
                             </tr>
-
-
                             <tr>
                                 <th scope="row"><label for="button_icon">Exigir valor adicional</label></th>
                                 <td>                                    
@@ -255,12 +328,8 @@ class Settings
 
                                 </td>
                             </tr>
-
-
                         </tbody>
                     </table>
-
-
                     <input type="submit" class="button button-primary" name="btn-save-cbmdf-oauth-settings" value="Salvar alterações" />
                 </form>
             </div>
