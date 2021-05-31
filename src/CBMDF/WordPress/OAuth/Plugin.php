@@ -4,8 +4,9 @@ namespace CBMDF\WordPress\OAuth;
 
 use CBMDF\WordPress\OAuth\View\Settings;
 use CBMDF\WordPress\OAuth\View\Button;
-use CBMDF\WordPress\OAuth\Options;
 use CBMDF\WordPress\OAuth\Provider;
+use CBMDF\WordPress\OAuth\Options;
+
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
@@ -122,13 +123,13 @@ class Plugin
 
                     if($options->get('complement_login')){
 
-                        if(!in_array($options->get('locate_plugin'), 
+                        if(!in_array("groups/groups.php", 
                         (array) get_option( 'active_plugins', array()
                         ))){ 
                             wp_die("<p>Você já está autenticado no servidor pelo plugin CBMDF OAuth2.<br/>
-                            <br/>Porém para usar o Complemento de Login você precisar ter o Plugin Groups instalado e ativado.<br/>
-                            <br/><a href=" . $options->get('groups') . ">Clique aqui</a> e baixe o plugin.<br/>
-                            <br/><a href=" . admin_url( '/plugin-install.php' ) . ">Clique aqui</a> e acesse a seção de instalação de plugins do menu de administração do seu site.</p>");
+                            <br/>Porém o <strong>Complemento de Login</strong> está ativado e é necessário ter o Plugin Groups instalado e ativado.<br/>
+                            <br/><a href='https://wordpress.org/plugins/groups'>Clicando aqui</a> você irá para a página do plugin.<br/>
+                            <br/>Se você for o administrador, <a href=" . admin_url( '/plugin-install.php' ) . ">clique aqui</a> e acesse a seção de instalação de plugins do menu de administração do seu site.</p>");
                         }
 
                         $data = wp_remote_post($options->get('external_api_perfis'), array(
@@ -145,20 +146,24 @@ class Plugin
                             if($group = \Groups_Group::read_by_name( $perfil->nom_perfil )){
                                 //Se existir um grupo com o nome do perfil, adiciona o usuário logado no grupo
                                 \Groups_User_Group::create( array( 'user_id' => $user_id, 'group_id' => $group->group_id ) );
-                                //Remove o usuário do grupo Registered
-                                if(!empty($options->get('name_grupo_registered'))){
-                                    $groupRemove = \Groups_Group::read_by_name($options->get('name_grupo_registered'));
-                                    \Groups_User_Group::delete( $user_id, $groupRemove->group_id);
-                                }
                             }
             
                             $perfisRedirect = $options->get('list_other_redirect');
 	                        $perfisRedirect = explode(";" , $perfisRedirect);
                             
                             foreach ($perfisRedirect as $perfis){
-                                if($perfil->nom_perfil == $perfis)
+                                if($perfil->nom_perfil == trim($perfis))
                                     $pageRedirect = true;
                             }
+                        }
+
+                        $groupsDelete = $options->get('names_groups_del');
+                        $groupsDelete = explode(";" , $groupsDelete);
+
+                        //Remove o usuário do grupo(s) desejados
+                        foreach ($groupsDelete as $groups){
+                            $groupRemove = \Groups_Group::read_by_name(trim($groups));
+                            \Groups_User_Group::delete( $user_id, $groupRemove->group_id);
                         }
                     }
 

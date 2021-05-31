@@ -36,17 +36,13 @@ class Options
         "logout_uri",
         "redirect_uri",
         "complement_login",
-        "groups",
-        "locate_plugin",
         "list_other_redirect",
         "page_redirect",
         "external_api_perfis",
         "button_icon",
-        "name_grupo_registered",
+        "names_groups_del",
         "custom_class",
         "custom_css",
-        "aditional_property",
-        "aditional_value",
         "ignore_certificate_errors"
     ];
 

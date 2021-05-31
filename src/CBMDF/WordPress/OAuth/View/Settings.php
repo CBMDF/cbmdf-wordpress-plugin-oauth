@@ -81,23 +81,28 @@ class Settings
         $selected_login_true = selected( $options->get('complement_login'), 1 , false);
         $selected_login_false = selected( $options->get('complement_login'), 0 , false);
 
-        if(!empty($options->get('name_grupo_registered')))
+        if(!empty($options->get('names_groups_del')))
             $checked = "checked='checked'";
         else
             $checked = "";
 
         return <<<OUTPUT
             <script>
+                function verificaComplemento() {
+                    var complemento = jQuery("#complement_login").val();
+                    if(complemento == 0){
+                        jQuery(".hidden-complemento").hide();
+                    }
+                    else{
+                        jQuery(".hidden-complemento").show();
+                    }
+                }
+                
                 jQuery(function(){
-                    jQuery("#complement_login").change(function (){
-                        var complemento = jQuery(this).val();
-                        if(complemento == 0){
-                            jQuery(".hidden-complemento").hide();
-                        }
-                        else{
-                            jQuery(".hidden-complemento").show();
-                        }
-                    });
+                    
+                    jQuery("#complement_login").change(verificaComplemento);
+                    
+                    verificaComplemento();
                 });
             </script>
             <div class="wrap">
@@ -185,7 +190,7 @@ class Settings
 
                     <hr />
 
-                    <h2>Complemento de Login</h2>
+                    <h2>Complemento de Login - Uso de API externa para vincular perfis a grupos</h2>
                     <table class="form-table" role="presentation">
                         <tbody>
                             <tr>
@@ -198,25 +203,11 @@ class Settings
                                     <p class="description">Complemento de login permite associar usuários a grupos de acordo com os seus perfis advindos de uma API externa. É <strong>necessário</strong> ter o plugin Groups da itthinx <strong>instalado</strong> e <strong>ativado</strong> em seu site.</p>
                                 </td>
                             </tr>
-                            
-                            <tr class="hidden-complemento">
-                                <th scope="row"><label for="locate_plugin">Localização do Plugin de Groups no servidor</label></th>
-                                <td><input name="locate_plugin" type="text" id="locate_plugin" placeholder="groups/groups.php" value="{$options->get('locate_plugin')}" class=" large-text">
-                                    <p class="description">Local do plugin de groups. Ex.: groups/groups.php.</p>
-                                </td>
-                            </tr>
 
                             <tr class="hidden-complemento">
-                                <th scope="row"><label for="groups">Site do Plugin de Groups</label></th>
-                                <td><input name="groups" type="text" id="groups" placeholder="https://wordpress.org/plugins/groups" value="{$options->get('groups')}" class=" large-text">
-                                    <p class="description">Site do plugin de groups. Ex.: https://wordpress.org/plugins/groups.</p>
-                                </td>
-                            </tr>
-
-                            <tr class="hidden-complemento">
-                                <th scope="row"><label for="list_other_redirect">Perfis que serão redirecionado para outro lugar</label></th>
+                                <th scope="row"><label for="list_other_redirect">Perfis que serão utilizados pelo Groups</label></th>
                                 <td><input name="list_other_redirect" type="text" id="list_other_redirect" placeholder="PERFIL_1; PERFIL_X" value="{$options->get('list_other_redirect')}" class=" large-text">
-                                    <p class="description">Lista de perfis que serão redirecionados para outro local separados por ponto e vírgula (;). Ex: PERFIL_1; PERFIL_X</p>
+                                    <p class="description">Ao logar o usuário é redirecionado para a URL do Redirect URI, porém essa lista de perfis farão o usuário ser redirecionado para outro local. Os perfis devem ser separados por ponto e vírgula (;). Ex: PERFIL_1; PERFIL_X</p>
                                 </td>
                             </tr>
 
@@ -228,19 +219,36 @@ class Settings
                             </tr>
                             
                             <tr class="hidden-complemento">
-                                <th scope="row"><label for="external_api_perfis">Link da API</label></th>
+                                <th scope="row"><label for="external_api_perfis">URL da API de Perfis</label></th>
                                 <td><input name="external_api_perfis" type="text" id="external_api_perfis" placeholder="{$site_url}" value="{$options->get('external_api_perfis')}" class=" large-text">
-                                    <p class="description">Link da API externa para busca de perfis. O retorno da API deve ser um JSON com a lista de perfis. Lembrando que o token gerado pelo o OAuth2 é passado no corpo da requisição da API.</p>
+                                    <p class="description">URL da API externa para busca de perfis. Lembrando que o token gerado pelo o OAuth2 é passado no corpo (body) da requisição da API.<br/>
+                                        <br/>Exemplo da chamada cURL:<br/>
+                                        <div class="language-php extra-class">
+                                            <pre class="language-php"><code><span class="token comment">// Chamada da API via cURL</span><br/>
+                                                    <span class="token function">curl --request POST \
+                                                    --url https://sistemas.cbm.df.gov.br/cerberusAuth/perfis \
+                                                    --header 'Content-Type: multipart/form-data; boundary=---011000010111000001101001' \
+                                                    --cookie PHPSESSID=69tpavjaic40odemtj6siptmsh \
+                                                    --form token=1234567ecb589bb944449d9f136d8dd141234567</span></code>
+                                            </pre>
+                                        </div>
+                                        O retorno esperado da chamada a API deve ser um JSON (chave/valor) com a lista de perfis:<br/>
+                                        <div class="language-php extra-class">
+                                            <pre class="language-php"><code><span class="token comment">// Retorno da API em JSON</span><br/>
+                                                    <span class="token function">[<br/>&nbsp;&nbsp;{&nbsp;<br/>&nbsp;&nbsp;&nbsp;&nbsp;"nom_perfil": "PERFIL_1" <br/>&nbsp;&nbsp;},<br/>&nbsp;&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;"nom_perfil": "PERFIL_2"<br/>&nbsp;&nbsp;}<br/>]</span></code>
+                                            </pre>
+                                        </div>
+                                    </p>
                                 </td>
                             </tr>
 
                             <tr class="hidden-complemento">
-                                <th scope="row"><label for="button_icon">Remover do grupo Registrado</label></th>
+                                <th scope="row"><label for="button_icon">Remover dos grupos</label></th>
                                 <td>                                    
                                     <input type="checkbox" id="cbmdf-oauth-toggle-aditional" $checked>
                                     <input class="cbmdf-oauth-group-registered regular-text" type="text" 
-                                    name="name_grupo_registered" value="{$options->get('name_grupo_registered')}" id="cbmdf-oauth-group-registered" />
-                                    <p class="description">O usuário será removido do grupo <strong>Registrado</strong>. Digite o nome do grupo Registrado do seu site, geralmente é Registered.</p>
+                                    name="names_groups_del" value="{$options->get('names_groups_del')}" id="cbmdf-oauth-group-registered" />
+                                    <p class="description">O usuário será removido do(s) grupo(s) listados. Os grupos devem ser separados por ponto e vírgula (;). Ex: GRUPO_1; GRUPO_X.</p>
                                 </td>
                             </tr>
                         </tbody>
@@ -285,46 +293,6 @@ class Settings
                                                 .oauth-button{ padding: 4px 10px !important; border-radius: 5px !important; font-size: 90%; line-height: 20px; text-transform: none !important;}
                                             </code></strong>
                                     </p>
-
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <hr />
-
-                    <h2>Criação do Usuário no WordPress</h2>
-
-                    <p >Nesta seção você pode especificar qual propriedade e/ou valor devem ser retornadas pelo servidor OAuth para o usuário.</p>
-
-                    <table class="form-table" role="presentation">
-                        <tbody>
-                            <tr>
-                                <th scope="row"><label for="button_icon">Exigir propriedade adicional</label></th>
-                                <td>                                    
-                                    <input type="checkbox" id="cbmdf-oauth-toggle-aditional">
-                                    <input class="cbmdf-oauth-aditional-property regular-text" type="text" 
-                                    name="aditional_property" id="cbmdf-oauth-aditional-property" />
-                                    <p class="description">O usuário só será criado no WordPress caso as informações do usuário retornadas pelo servidor OAuth contenham a <strong>propriedade</strong> especificada.</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><label for="button_icon">Combinação dos critérios</label></th>
-                                <td>                                    
-                                   <select name="aditional_value_criteria" >
-                                   <option value="and">Exigir ambos</option>
-                                   <option value="or">Um ou outro</option>
-                                   </select>                                    
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><label for="button_icon">Exigir valor adicional</label></th>
-                                <td>                                    
-                                    <input type="checkbox" id="cbmdf-oauth-toggle-aditional">
-                                    <input class="cbmdf-oauth-aditional-value regular-text" type="text" 
-                                    name="aditional_value" id="cbmdf-oauth-aditional-value" />
-                                    <p class="description">O usuário só será criado no WordPress caso as informações do usuário retornadas pelo servidor OAuth contenham o <strong>valor</strong> especificado.</p>
 
                                 </td>
                             </tr>
